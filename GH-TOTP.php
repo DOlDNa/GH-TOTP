@@ -24,13 +24,11 @@ header('Refresh: '. $time);
 	<head>
 		<meta charset=utf-8>
 		<title>GH-TOTP</title>
-		<style>::selection{background-color:#333}::-webkit-scrollbar{display:none}</style>
+		<style>::-webkit-scrollbar{display:none}</style>
 		<link rel=icon href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='50%' style='dominant-baseline:central;font-size:5em;text-anchor:middle'>🗝</text></svg>">
 	</head>
 	<body onload="t.style.width='0px'" style="background:#222;line-height:100vh;margin:0;text-align:center">
 		<div id=t style="background-color:#999;height:2px;position:static;transition:width <?=$time-1?>s linear 1s;width:100%"></div>
-		<code style="color:#999;font-size:10em;user-select:all">
-			<?php printf('%06d', (((ord($h[$o + 0]) & 0x7f) << 24) | ((ord($h[$o + 1]) & 0xff) << 16) | ((ord($h[$o + 2]) & 0xff) << 8) | (ord($h[$o + 3]) & 0xff)) % pow(10, 6))?>
-		</code>
+		<input onfocus="this.select()" style="color:#999;background:inherit;border:none;font-size:10rem;text-align:center;width:6em" tabindex=1 type=text value="<?php printf('%06d', (((ord($h[$o + 0]) & 0x7f) << 24) | ((ord($h[$o + 1]) & 0xff) << 16) | ((ord($h[$o + 2]) & 0xff) << 8) | (ord($h[$o + 3]) & 0xff)) % pow(10, 6))?>">
 	</body>
 </html>
