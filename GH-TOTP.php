@@ -17,18 +17,17 @@ for ($i = $j = $k = 0, $l = strlen($secret); $k < $l; ++$k)
 }
 $h = hash_hmac('sha1', pack('N*', 0). pack('N*', floor(microtime(true) / $time)), $c, true);
 $o = ord($h[19]) & 0xf;
-header('Refresh: '. $time);
-?>
+header('Refresh: '. $time)?>
 <!doctype html>
 <html lang=ja>
 	<head>
 		<meta charset=utf-8>
-		<title>GH-TOTP</title>
+		<title>TOTP</title>
 		<style>::-webkit-scrollbar{display:none}</style>
 		<link rel=icon href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='50%' style='dominant-baseline:central;font-size:5em;text-anchor:middle'>🗝</text></svg>">
 	</head>
-	<body onload="t.style.width='0px'" style="background:#222;line-height:100vh;margin:0;text-align:center">
+	<body onload="t.style.width='0px',s.select()" style="background:#222;line-height:100vh;margin:0;text-align:center">
 		<div id=t style="background-color:#999;height:2px;position:static;transition:width <?=$time-1?>s linear 1s;width:100%"></div>
-		<input onfocus="this.select()" style="color:#999;background:inherit;border:none;font-size:10rem;text-align:center;width:6em" tabindex=1 type=text value="<?php printf('%06d', (((ord($h[$o + 0]) & 0x7f) << 24) | ((ord($h[$o + 1]) & 0xff) << 16) | ((ord($h[$o + 2]) & 0xff) << 8) | (ord($h[$o + 3]) & 0xff)) % pow(10, 6))?>">
+		<input id=s readonly style="color:#999;background:inherit;border:0;font-size:10rem;outline:0;text-align:center;width:6em" tabindex=1 type=text value="<?php printf('%06d', (((ord($h[$o + 0]) & 0x7f) << 24) | ((ord($h[$o + 1]) & 0xff) << 16) | ((ord($h[$o + 2]) & 0xff) << 8) | (ord($h[$o + 3]) & 0xff)) % pow(10, 6))?>">
 	</body>
 </html>
